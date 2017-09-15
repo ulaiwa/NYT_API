@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>New York Times Article Search</title>
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Bootswatch Styling for Improving the Aesthetics -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/flatly/bootstrap.min.css">
+
+	<!-- Font Awesome CSS Icons (For cool glyphicons) -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+	<!-- Style to fix the issue of text extending past panel length -->
+	<link rel="stylesheet" type="text/css" href="style.css" >
+
+	<link href="https://fonts.googleapis.com/css?family=IM+Fell+Great+Primer" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- Main Bootstrap Search -->
+<div class="container">
+
+	<!-- Jumbotron for Title -->
+	<div class="jumbotron">
+		<h1 class="text-center">NY Times Article Search</h1>
+	</div>
+
+	<!-- Row for Searching New York Times -->
+	<div class="row">
+    <div class="col-sm-2"></div>
+		<div class="col-sm-8">
+		<br>
+			<!-- First panel is for handling the search parameters -->
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title"><strong>Search Parameters</strong></h3>
+				</div>
+				<div class="panel-body">
+
+					<!-- Here we create an HTML Form for handling the inputs-->
+					<form role="form">
+
+				  	  <!-- Here we create the text box for capturing the search term-->
+					  <div class="form-group">
+					    <label for="search">Search Term:</label>
+					    <input type="text" class="form-control" id="searchTerm">
+					  </div>
+
+					  <!-- Here we capture the number of records that the user wants to retrieve  -->
+					  <div class="form-group">
+					    <label for="pwd">Number of Records to Retrieve:</label>
+						<select class="form-control" id="numRecordsSelect">
+							<option value=1>1</option>
+							<!-- Setting the option for 5 as default -->
+							<option value=5 selected>5</option>
+							<option value=10>10</option>
+						</select>
+					  </div>
+
+				  	  <!-- Here we capture the Start Year Parameter-->
+					  <div class="form-group">
+					    <label for="startYear">Start Year (Optional):</label>
+					    <input type="text" class="form-control" id="startYear">
+					  </div>
+
+				  	  <!-- Here we capture the End Year Parameter -->
+					  <div class="form-group">
+					    <label for="endYear">End Year (Optional):</label>
+					    <input type="text" class="form-control" id="endYear">
+					  </div>
+
+					  <!-- Here we have our final submit button -->
+					  <button type="submit" class="btn btn-default" id="runSearch"><i class="fa fa-search"></i> Search</button>
+  					  <button type="button" class="btn btn-default" id="clearAll"><i class="fa fa-trash"></i> Clear Results</button>
+
+					</form>
+				</div>
+			</div>
+		</div>
+    <div class="col-sm-2"></div>
+	</div>
+
+	<!-- This row will handle all of the retrieved articles -->
+	<div class="row">
+    <div class="col-sm-2"></div>
+		<div class="col-sm-8">
+		<br>
+
+			<!-- This panel will initially be made up of a panel and wells for each of the articles retrieved -->
+			<div class="panel panel-primary">
+
+				<!-- Panel Heading for the retrieved articles box -->
+				<div class="panel-heading">
+					<h3 class="panel-title"><strong><i class="fa fa-table"></i>   Top Articles below:</strong></h3>
+				</div>
+
+				<!-- This main panel will hold each of the resulting articles -->
+				<div class="panel-body" id="wellSection">
+				</div>
+			</div>
+		</div>
+    <div class="col-sm-2"></div>
+	</div>
+
+	<!-- Footer Region -->
+	<div class="row">
+		<div class="col-sm-12">
+
+			<hr>
+			<h5 class="text-center"><small>By Group 4!!!!!!</small></h5>
+
+		</div>
+	</div>
+
+</div>
+
+<!-- jQuery JS -->
+<script src="https://code.jquery.com/jquery.js"></script>
+
+<!-- Code to the Javascript File -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+
+  	
+
+$("#getAPI").on("click", function(event) {
+     var term = $("#searchTerm").val();
+     var startYear = $("#startYear").val();
+      var endYear = $("#endYear").val();
+      var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+      url += '?' + $.param({
+        'api-key': "5b58db7ab9934db2b613d65fbca52017",
+        'q': term,
+        'fq': "5",
+        'begin_date': startYear,
+        'end_date': endYear
+      });
+
+      $.ajax({
+        url: url,
+        method: 'GET',
+      }).done(function(result) {
+        console.log(result);
+        console.log(result.response.docs);
+        console.log(result.response.docs[0].headline.main);
+        console.log(JSON.stringify(result.response.docs[0].byline));
+        console.log(result.response.docs[0].section_name);
+        console.log(result.response.docs[0].pub_date);
+        console.log(result.response.docs[0].web_url);
+      }).fail(function(err) {
+        throw err;
+      });
+          event.preventDefault();
+          console.log(term);
+          console.log(startYear);
+          console.log(endYear);
+
+       })
+
+       </script>
+
+</body>
+</html>

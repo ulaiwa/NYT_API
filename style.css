@@ -1,0 +1,25 @@
+.jumbotron {
+  color: #f09184;
+  font-family: 'IM Fell Great Primer', serif !important;
+  background-color: #fff;
+}
+ .panel-heading{
+  text-align:center;
+  background-color: #fff !important;
+  color: #000 !important;
+  font-size: 12px;
+}
+.panel-primary {
+  border:  1px solid #c7b073 !important;
+
+}
+.panel-primary>.panel-heading {
+  border-bottom:   1px solid #c7b073 !important;
+}
+.form-control {
+  border:  1px solid #c7b073 !important;
+}
+.btn-default{
+ background-color: #bfd8d2;
+ border: none;
+}
